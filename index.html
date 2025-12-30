@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📩 จดหมายถึงอีหลิว</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== envelope ===== */
+.envelope{
+    position:relative;
+    width:300px;
+    height:200px;
+    background:#fff;
+    cursor:pointer;
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+/* flap */
+.envelope::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+    border-left:150px solid transparent;
+    border-right:150px solid transparent;
+    border-top:100px solid #ff4d6d;
+    transform-origin:top;
+    transition:.6s;
+}
+
+/* letter */
+.letter{
+    position:absolute;
+    top:30px;
+    left:20px;
+    width:260px;
+    height:150px;
+    background:#fff;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+    opacity:0;
+    transform:scale(.7) translateY(40px);
+    transition:.6s;
+}
+
+/* ===== animations ===== */
+@keyframes shake{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-5px)}
+    50%{transform:translateX(5px)}
+    75%{transform:translateX(-5px)}
+    100%{transform:translateX(0)}
+}
+
+.envelope.shake{
+    animation:shake .4s;
+}
+
+.envelope.open::before{
+    transform:rotateX(180deg);
+}
+
+.envelope.open .letter{
+    opacity:1;
+    transform:scale(1) translateY(-50px);
+}
+
+h2{
+    color:#ff4d6d;
+    margin:5px 0;
+}
+
+p{
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope" onclick="openLetter()">
+    <div class="letter">
+        <h2>เปิดทำเหี้ยไร อีควาย! 😂</h2>
+        <p>
+            กล้าเปิดจดหมายนี้เนอะ<br>
+            แสดงว่าว่างมาก 🤣<br><br>
+            ไปทำการบ้าน / ไปนอน / แล้วมาอัพเดท!<br><br>
+            (แต่ขอบคุณที่ยังเปิด 💖)
+        </p>
+    </div>
+</div>
+
+<!-- sound -->
+<audio id="pop">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3f92c50d09.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let opened = false;
+
+function openLetter(){
+    if(opened) return;
+    opened = true;
+
+    const env = document.querySelector(".envelope");
+    const sound = document.getElementById("pop");
+
+    env.classList.add("shake");
+
+    setTimeout(()=>{
+        sound.play();
+        env.classList.add("open");
+    },400);
+}
+</script>
+
+</body>
+</html>
